@@ -1,12 +1,13 @@
 export const theme = {
     colors: {
-        white: "#FFFFFF",
         yellow: "#FFE600",
+        white: "#FFFFFF",
         black: "#333333",
-        darkGray: "#666666",
         gray: "#999999",
         lightGray: "#EEEEEE",
+        darkGray: "#666666",
         blue: "#3483FA",
+        darkBlue: "#2968c8",
 
     },
     device: {
