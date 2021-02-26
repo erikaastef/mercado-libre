@@ -1,4 +1,4 @@
-import Basic from '../layouts/Basic'
+import MainLayout from '../layouts/Main'
 
 export default function Home() {
   return (
@@ -8,5 +8,6 @@ export default function Home() {
 }
 
 Home.renderData = {
-  layout: Basic
+  layout: MainLayout,
+  cleanUpSearch: true
 }

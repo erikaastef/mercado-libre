@@ -1,5 +1,5 @@
 {
-  "name": "proyecto-x",
+  "name": "mercado-libre",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "next": "10.0.5",
+    "qs": "^6.9.6",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "styled-components": "^5.2.1"

@@ -7,43 +7,51 @@ export default async (req, res) => {
             query: { id },
         } = req
 
-        await axios.get(`https://api.mercadolibre.com/items/${id}`)
-            .then(async (response) => {
-                const selectedItem = response.data
+        let item;
+        let description;
+        let categories;
 
-                await axios.get(`https://api.mercadolibre.com/items/${id}/description`)
-                    .then(response => {
-                        const itemDescription = response.data
+        try {
+            const itemPromise = await axios.get(`https://api.mercadolibre.com/items/${id}`)
+            item = itemPromise.data
 
-                        res.status(200).send({
-                            "author": {
-                                "name": "",
-                                "lastname": ""
-                            },
-                            "categories": [],
-                            "item": {
-                                "id": selectedItem.id,
-                                "title": selectedItem.title,
-                                "condition": selectedItem.condition,
-                                "price": {
-                                    "currency": selectedItem.currency_id,
-                                    "amount": Math.floor(selectedItem.price),
-                                    "decimals": selectedItem.price
-                                },
-                                "sold_quantity": selectedItem.sold_quantity,
-                                "free_shipping": selectedItem.shipping.free_shipping,
-                                "picture": selectedItem.thumbnail,
-                                "description": itemDescription.plain_text
-                            }
-                        });
-                    })
-                    .catch(err => {
-                        res.status(500).send(err.response.data);
-                    });
-            })
-            .catch(err => {
-                res.status(500).send(err.response.data);
+            const categoriesPromise = await axios.get(`https://api.mercadolibre.com/sites/MLA/search?category=${item.category_id}`)
+            const categoriesData = categoriesPromise.data
+            categories = categoriesData.filters.length ? categoriesData.filters[0].values[0].path_from_root : []
+
+            const descriptionPromise = await axios.get(`https://api.mercadolibre.com/items/${id}/description`)
+            description = descriptionPromise.data ? descriptionPromise.data.plain_text : ''
+        }
+        catch (err) {
+            console.log(err.response.data)
+        }
+        finally {
+            res.status(200).send({
+                "author": {
+                    "name": "",
+                    "lastname": ""
+                },
+                "categories": categories,
+                "item": {
+                    "id": item.id,
+                    "title": item.title,
+                    "condition": item.condition,
+                    "price": {
+                        "currency": item.currency_id,
+                        "amount": Math.floor(item.price),
+                        "decimals": item.price
+                    },
+                    "sold_quantity": item.sold_quantity,
+                    "free_shipping": item.shipping.free_shipping,
+                    "picture": item.thumbnail,
+                    "description": description
+                }
             });
+        }
+
+
+
+
     }
     if (req.method === "POST") {
 
