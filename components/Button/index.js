@@ -1,9 +1,10 @@
 import { SecondaryButton } from './styles'
-export default function Button({ type, children, onClick }) {
+
+export default function Button({ type, children, onClick, ...props }) {
     return (
         <>
             {type === "secondary" &&
-                <SecondaryButton onClick={onClick}>
+                <SecondaryButton onClick={onClick} {...props}>
                     {children}
                 </SecondaryButton>
             }

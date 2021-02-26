@@ -9,4 +9,8 @@ export const SecondaryButton = styled.button`
     color:${({ theme }) => theme.colors.white};
     font-size: 16px;
     border-radius:4px;
+    transition: background .2s ease-in-out;
+    :hover{
+        background:${({ theme }) => theme.colors.darkBlue}
+    }
 `
